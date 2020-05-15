@@ -1,0 +1,11 @@
+{
+	"name": "afterlogic/aurora-module-mail-change-password-ispconfig-plugin",
+	"type": "aurora-module",
+	"require": {
+		"php": ">=5.6.0",
+		"afterlogic/aurora-framework": "~0.9.0"
+	},
+	"extra": {
+		"installer-name": "MailChangePasswordIspconfigPlugin"
+	}
+}
