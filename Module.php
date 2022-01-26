@@ -143,7 +143,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 				if(crypt(stripslashes($sPassCurr),$sSalt) != $sPassStored) { 
 					throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountOldPasswordNotCorrect);
 				} else {
-					$sPasshash = crypt_password($sPassword);
+					$sPasshash = $this->crypt_password($sPassword);
 					$sql = "UPDATE mail_user SET password='" . $sPasshash . "' WHERE email='" . $oAccount->IncomingLogin . "'";
 					$bResult = mysqli_query($mysqlcon,$sql);
 					if (!$bResult)
