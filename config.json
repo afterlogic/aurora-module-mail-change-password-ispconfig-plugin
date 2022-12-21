@@ -3,24 +3,50 @@
 		false,
 		"bool"
 	],
+	"Disabled_Description": [
+		"Setting to true disables the module",
+		"string"
+	],	
 	"SupportedServers": [
-		["*"],
+		[
+			"*"
+		],
 		"array"
+	],
+	"SupportedServers_Description": [
+		"If IMAP Server value of the mailserver is in this list, password change is enabled for it. * enables it for all the servers.",
+		"string"
 	],
 	"DbUser": [
 		"",
+		"string"
+	],
+	"DbUser_Description": [
+		"Defines username for accessing ISPConfig database",
 		"string"
 	],
 	"DbPass": [
 		"",
 		"string"
 	],
+	"DbPass_Description": [
+		"Defines password for accessing ISPConfig database",
+		"string"
+	],
 	"DbName": [
 		"",
 		"string"
 	],
+	"DbName_Description": [
+		"Defines name of ISPConfig database",
+		"string"
+	],
 	"DbHost": [
 		"localhost",
+		"string"
+	],
+	"DbHost_Description": [
+		"Defines hostname of ISPConfig database",
 		"string"
 	]
 }
