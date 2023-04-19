@@ -14,6 +14,8 @@ namespace Aurora\Modules\MailChangePasswordIspconfigPlugin;
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
  * @copyright Copyright (c) 2023, Afterlogic Corp.
  *
+ * @property Settings $oModuleSettings
+ *
  * @package Modules
  */
 class Module extends \Aurora\System\Module\AbstractModule
@@ -89,12 +91,12 @@ class Module extends \Aurora\System\Module\AbstractModule
      */
     protected function checkCanChangePassword($oAccount)
     {
-        $bFound = in_array('*', $this->getConfig('SupportedServers', array()));
+        $bFound = in_array('*', $this->oModuleSettings->SupportedServers);
 
         if (!$bFound) {
             $oServer = $oAccount->getServer();
 
-            if ($oServer && in_array($oServer->IncomingServer, $this->getConfig('SupportedServers'))) {
+            if ($oServer && in_array($oServer->IncomingServer, $this->oModuleSettings->SupportedServers)) {
                 $bFound = true;
             }
         }
@@ -139,10 +141,10 @@ class Module extends \Aurora\System\Module\AbstractModule
         $bResult = false;
         $sPassCurr = $oAccount->getPassword();
         if (0 < strlen($sPassCurr) && $sPassCurr !== $sPassword) {
-            $config_dbuser = $this->getConfig('DbUser', '');
-            $config_dbpass = $this->getConfig('DbPass', '');
-            $config_dbname = $this->getConfig('DbName', '');
-            $config_dbhost = $this->getConfig('DbHost', 'localhost');
+            $config_dbuser = $this->oModuleSettings->DbUser;
+            $config_dbpass = $this->oModuleSettings->DbPass;
+            $config_dbname = $this->oModuleSettings->DbName;
+            $config_dbhost = $this->oModuleSettings->DbHost;
 
             $mysqlcon = mysqli_connect($config_dbhost, $config_dbuser, $config_dbpass, $config_dbname);
             if ($mysqlcon) {
