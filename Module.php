@@ -152,6 +152,13 @@ class Module extends \Aurora\System\Module\AbstractModule
             $config_dbname = $this->oModuleSettings->DbName;
             $config_dbhost = $this->oModuleSettings->DbHost;
 
+            if ($config_dbpass && !\Aurora\System\Utils::IsEncryptedValue($config_dbpass)) {
+                $this->setConfig('DbPass', \Aurora\System\Utils::EncryptValue($config_dbpass));
+                $this->saveModuleConfig();
+            } else {
+                $config_dbpass = \Aurora\System\Utils::DecryptValue($config_dbpass);
+            }
+
             $mysqlcon = mysqli_connect($config_dbhost, $config_dbuser, $config_dbpass, $config_dbname);
             if ($mysqlcon) {
                 $sql = "SELECT * FROM mail_user WHERE login='" . $oAccount->IncomingLogin . "'";
