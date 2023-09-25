@@ -165,7 +165,7 @@ class Module extends \Aurora\System\Module\AbstractModule
                 $result = mysqli_query($mysqlcon, $sql);
                 $aUser = mysqli_fetch_array($result);
                 $sPassStored = stripslashes($aUser['password']);
-                $sSalt = substr($sPassStored, 0, 1+strrpos($sPassStored, '$'));
+                $sSalt = substr($sPassStored, 0, 1 + strrpos($sPassStored, '$'));
                 if (crypt(stripslashes($sPassCurr), $sSalt) != $sPassStored) {
                     throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountOldPasswordNotCorrect);
                 } else {
