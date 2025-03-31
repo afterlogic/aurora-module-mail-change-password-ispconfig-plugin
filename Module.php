@@ -8,6 +8,7 @@
 namespace Aurora\Modules\MailChangePasswordIspconfigPlugin;
 
 use Aurora\Modules\Mail\Models\MailAccount;
+use Aurora\System\Notifications;
 
 /**
  * Allows users to change passwords on their email accounts in ISPConfig.
@@ -169,18 +170,18 @@ class Module extends \Aurora\System\Module\AbstractModule
                 $sPassStored = stripslashes($aUser['password']);
                 $sSalt = substr($sPassStored, 0, 1 + strrpos($sPassStored, '$'));
                 if (crypt(stripslashes($sPassCurr), $sSalt) != $sPassStored) {
-                    throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountOldPasswordNotCorrect);
+                    throw new \Aurora\System\Exceptions\ApiException(Notifications::AccountOldPasswordNotCorrect);
                 } else {
                     $sPasshash = $this->crypt_password($sPassword);
                     $sql = "UPDATE mail_user SET password='" . $sPasshash . "' WHERE email='" . $oAccount->IncomingLogin . "'";
                     $bResult = mysqli_query($mysqlcon, $sql);
                     if (!$bResult) {
-                        throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountNewPasswordUpdateError);
+                        throw new \Aurora\System\Exceptions\ApiException(Notifications::CanNotChangePassword);
                     }
                 }
                 mysqli_close($mysqlcon);
             } else {
-                throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountNewPasswordUpdateError);
+                throw new \Aurora\System\Exceptions\ApiException(Notifications::CanNotChangePassword);
             }
         }
         return $bResult;
